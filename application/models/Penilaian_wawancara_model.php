@@ -3,26 +3,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Penilaian_wawancara_model extends CI_Model
 {
-
     public function getAlternatif()
     {
+        $this->db->order_by('id_alternatif', 'ASC');
         return $this->db->get('alternatif')->result();
     }
 
-    public function getAll()
+    public function getAllHasilWawancara()
     {
         $this->db->select('
-        wawancara.*,
-        alternatif.nama
-    ');
-        $this->db->from('wawancara');
-        $this->db->join('alternatif', 'alternatif.id_alternatif = wawancara.id_alternatif', 'left');
+            jawaban_wawancara.*,
+            alternatif.nama,
+            soal_wawancara.pertanyaan
+        ');
+        $this->db->from('jawaban_wawancara');
+        $this->db->join('alternatif', 'alternatif.id_alternatif = jawaban_wawancara.id_alternatif', 'left');
+        $this->db->join('soal_wawancara', 'soal_wawancara.id_soal = jawaban_wawancara.id_soal', 'left');
+        $this->db->order_by('jawaban_wawancara.id_alternatif', 'ASC');
 
         return $this->db->get()->result();
-    }
-
-    public function insert($data)
-    {
-        return $this->db->insert('wawancara', $data);
     }
 }

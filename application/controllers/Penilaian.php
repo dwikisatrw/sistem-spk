@@ -27,9 +27,10 @@ class Penilaian extends CI_Controller
     public function index()
     {
         $data = [
-            'page'       => "Penilaian",
-            'kriteria'   => $this->Penilaian_model->get_kriteria(),
-            'alternatif' => $this->Penilaian_model->get_alternatif(),
+            'page'           => "Penilaian",
+            'kriteria'       => $this->Penilaian_model->get_kriteria(),
+            'alternatif'     => $this->Penilaian_model->get_alternatif(),
+            'soal_wawancara' => $this->Penilaian_model->get_soal_wawancara(),
         ];
 
         $this->load->view('penilaian/index', $data);
@@ -40,6 +41,7 @@ class Penilaian extends CI_Controller
         $id_alternatif = $this->input->post('id_alternatif');
         $id_kriteria   = $this->input->post('id_kriteria');
         $nilai         = $this->input->post('nilai');
+        $jawaban_soal  = $this->input->post('jawaban_soal');
 
         // validasi
         if (empty($id_alternatif) || empty($id_kriteria) || empty($nilai)) {
@@ -72,6 +74,12 @@ class Penilaian extends CI_Controller
             }
         }
 
+        // Simpan jawaban wawancara & kalkulasi kesesuaian persyaratan kerja
+        if (!empty($jawaban_soal)) {
+            $this->Penilaian_model->simpan_jawaban_wawancara($id_alternatif, $jawaban_soal);
+            $this->Penilaian_model->kalkulasi_kesesuaian_persyaratan($id_alternatif);
+        }
+
         $this->session->set_flashdata(
             'message',
             '<div class="alert alert-success" role="alert">
@@ -87,6 +95,7 @@ class Penilaian extends CI_Controller
         $id_alternatif = $this->input->post('id_alternatif');
         $id_kriteria   = $this->input->post('id_kriteria');
         $nilai         = $this->input->post('nilai');
+        $jawaban_soal  = $this->input->post('jawaban_soal');
 
         // validasi
         if (empty($id_alternatif) || empty($id_kriteria) || empty($nilai)) {
@@ -125,6 +134,12 @@ class Penilaian extends CI_Controller
                     $key
                 );
             }
+        }
+
+        // Simpan jawaban wawancara & kalkulasi kesesuaian persyaratan kerja
+        if (!empty($jawaban_soal)) {
+            $this->Penilaian_model->simpan_jawaban_wawancara($id_alternatif, $jawaban_soal);
+            $this->Penilaian_model->kalkulasi_kesesuaian_persyaratan($id_alternatif);
         }
 
         $this->session->set_flashdata(

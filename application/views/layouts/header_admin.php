@@ -104,12 +104,12 @@ if ($this->session->status !== ('Logged')) {
             <span>Data Alternatif</span>
           </a>
         </li>
-        <li class="nav-item <?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara') ? 'active' : ''; ?>">
+        <li class="nav-item <?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara' || $page == 'Soal Wawancara') ? 'active' : ''; ?>">
           <a class="nav-link collapsed"
             href="#"
             data-toggle="collapse"
             data-target="#collapsePenilaian"
-            aria-expanded="<?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara') ? 'true' : 'false'; ?>"
+            aria-expanded="<?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara' || $page == 'Soal Wawancara') ? 'true' : 'false'; ?>"
             aria-controls="collapsePenilaian">
 
             <i class="fas fa-fw fa-edit"></i>
@@ -117,9 +117,14 @@ if ($this->session->status !== ('Logged')) {
           </a>
 
           <div id="collapsePenilaian"
-            class="collapse <?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara') ? 'show' : ''; ?>">
+            class="collapse <?= ($page == 'Penilaian' || $page == 'Penilaian Wawancara' || $page == 'Soal Wawancara') ? 'show' : ''; ?>">
 
             <div class="bg-white py-2 collapse-inner rounded">
+
+              <a class="collapse-item <?= ($page == 'Soal Wawancara') ? 'active' : ''; ?>"
+                href="<?= base_url('Soal_wawancara'); ?>">
+                Soal Wawancara
+              </a>
 
               <a class="collapse-item <?= ($page == 'Penilaian') ? 'active' : ''; ?>"
                 href="<?= base_url('Penilaian'); ?>">
